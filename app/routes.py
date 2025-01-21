@@ -4,6 +4,8 @@ import requests
 from openai import OpenAI
 import datetime
 import requests
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.cluster import KMeans
 
 bp = Blueprint('main', __name__)
 
