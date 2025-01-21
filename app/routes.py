@@ -36,7 +36,7 @@ def fetch_news(category):
     }
     params = {
         "query": query,
-        "display": 10,  # 뉴스 항목 수를 5개에서 10개로 늘림
+        "display": 20,  # 20개의 뉴스 항목
         "sort": "date"
     }
     response = requests.get(url, headers=headers, params=params)
@@ -44,17 +44,36 @@ def fetch_news(category):
         return response.json().get("items", [])
     return {"error": f"Failed to fetch news for {category}: {response.status_code}"}
 
-def summarize_news_for_category(articles, category):
-    """GPT-4 API를 사용해 카테고리별 뉴스 내용을 요약"""
+def cluster_news(articles):
+    """뉴스 기사들을 유사도에 따라 클러스터링"""
+    texts = [f"{article['title']} {article['description']}" for article in articles]
+
+    # TF-IDF 벡터화
+    vectorizer = TfidfVectorizer(stop_words='english')
+    X = vectorizer.fit_transform(texts)
+
+    # KMeans 클러스터링 (최대 5개 클러스터로 그룹화)
+    kmeans = KMeans(n_clusters=5, random_state=42)
+    kmeans.fit(X)
+
+    # 클러스터에 속한 뉴스 항목들을 그룹화
+    clustered_news = {i: [] for i in range(5)}
+    for idx, label in enumerate(kmeans.labels_):
+        clustered_news[label].append(articles[idx])
+
+    return clustered_news
+
+def summarize_news_for_group(group_articles, category):
+    """뉴스 그룹별로 요약"""
     try:
         # 뉴스 제목과 내용을 하나의 메시지로 생성
-        contents = "\n\n".join([f"Title: {article['title']}\nContent: {article['description']}" for article in articles])
+        contents = "\n\n".join([f"Title: {article['title']}\nContent: {article['description']}" for article in group_articles])
 
         # OpenAI ChatCompletion 호출
         chat_completion = client.chat.completions.create(
             messages=[{
                 "role": "user",
-                "content": f"다음 기사들을 바탕으로 {category} 카테고리의 핵심 요약을 300~500자로 작성해 주세요. 각 기사의 요약을 줄바꿈으로 구분하여 주세요:\n\n{contents}"
+                "content": f"다음 기사들을 바탕으로 {category} 카테고리의 핵심 요약을 100자 정도로 작성해 주세요:\n\n{contents}"
             }],
             model="gpt-4",  # 모델 이름 수정 (GPT-4)
         )
@@ -75,11 +94,18 @@ def get_all_key_news():
         if "error" in news_items:
             all_summaries[category] = {"error": news_items["error"]}
         else:
-            # 10개의 뉴스 기사를 요약하여 카테고리별 전체 요약 생성
-            summary = summarize_news_for_category(news_items, category)
-            all_summaries[category] = {"key_summary": summary}
+            # 20개의 뉴스 기사를 클러스터링하여 그룹별로 요약
+            clustered_news = cluster_news(news_items)
+            grouped_summaries = []
+            for group_id, group_articles in clustered_news.items():
+                summary = summarize_news_for_group(group_articles, category)
+                grouped_summaries.append(summary)
+
+            # 그룹별 요약을 줄바꿈으로 구분하여 반환
+            all_summaries[category] = {"key_summary": "\n\n".join(grouped_summaries)}
 
     return jsonify(all_summaries)
+
 
 def summarize_news_for_article(description):
     """기사 내용을 100자 내외로 요약"""
