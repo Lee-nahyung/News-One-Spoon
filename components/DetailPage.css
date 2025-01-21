@@ -1,0 +1,76 @@
+/* 상세 페이지 컨테이너 스타일 */
+.detail-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+/* 제목 스타일 */
+.detail-page h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00378b;
+    margin-bottom: 20px;
+}
+
+/* 요약 카드 컨테이너 */
+.summary-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 3열 그리드 */
+    gap: 20px; /* 카드 간의 간격 */
+    justify-content: center; /* 중앙 정렬 */
+    margin: 0 auto;
+    max-width: 1200px; /* 최대 너비 제한 */
+}
+
+/* 각 요약 카드 */
+.summary-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    position: relative; /* 내부 콘텐츠 배치 조정을 위한 기준 */
+}
+
+/* 요약 제목 스타일 */
+.summary-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00378b;
+    margin-bottom: 10px;
+}
+
+.summary-card p strong {
+    font-weight: bold;
+    color: #00378b; /* 강조 색상 */
+  }
+  
+  .summary-card p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+  }
+
+/* 호버 시 카드 강조 */
+.summary-card:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f4f4f4;
+    cursor: pointer;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .summary-container {
+        grid-template-columns: repeat(2, 1fr); /* 화면 크기가 작으면 2열 */
+    }
+}
+
+@media (max-width: 480px) {
+    .summary-container {
+        grid-template-columns: 1fr; /* 화면 크기가 더 작으면 1열 */
+    }
+}

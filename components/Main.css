@@ -1,0 +1,116 @@
+/* 메인 컨테이너 스타일 */
+.main {
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+  
+/* 메인 제목 */
+.main h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00378b;
+    margin-bottom: 20px;
+}
+  
+/* 카테고리 카드 컨테이너 */
+.category-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+    gap: 20px; /* 카드 간의 간격 */
+    justify-content: center; /* 중앙 정렬 */
+    margin: 0 auto;
+    max-width: 1200px; /* 최대 너비 제한 */
+}
+  
+/* 각 카테고리 카드 */
+.category-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    position: relative; /* "더보기" 위치를 위한 기준 */
+}
+  
+.category-card h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #00378b;
+    margin-bottom: 8px;
+    display: inline-block; /* "더보기"와 같은 줄 배치 */
+}
+
+/* "더보기" 텍스트 스타일 */
+.more-link {
+    position: absolute;
+    top: 23px; /* 상단으로부터 10px */
+    right: 20px; /* 우측으로부터 10px */
+    font-size: 14px;
+    color: #d5d6d8; /* 링크 색상 */
+    cursor: pointer;
+    margin-left: 10px; /* 제목과 간격 */
+    text-decoration: none;
+}
+
+.more-link:hover {
+    text-decoration: underline;
+}
+  
+.category-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 아이템 박스 스타일 */
+.category-card ul li {
+    position: relative; /* 아이템 번호 위치 설정을 위한 기준 */
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+    background-color: #f4f4f4; /* 아이템 박스 배경색 */
+    border: 1px solid #ddd;
+    border-radius: 8px; /* 모서리 둥글게 */
+    padding: 20px; /* 텍스트와 박스 간의 간격 */
+    padding-left: 40px; /* 아이템 번호와 텍스트 간 간격 확보 */
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 아이템 번호 스타일 */
+.category-card ul li::before {
+    content: counter(item) ". "; /* 번호 표시 */
+    counter-increment: item; /* 번호 증가 */
+    position: absolute;
+    top: 20px;
+    left: 18px;
+    font-weight: bold;
+    color: #00378b; /* 번호 색상 */
+    font-size: 18px;
+}
+
+/* 카운터 초기화 */
+.category-card ul {
+    counter-reset: item; /* 번호 초기화 */
+}
+
+.category-card ul li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+    background-color: #e9e9e9; /* 호버 시 배경색 변경 */
+}
+  
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .category-container {
+      grid-template-columns: repeat(2, 1fr); /* 화면 크기가 작으면 2열 */
+    }
+}
+  
+@media (max-width: 480px) {
+    .category-container {
+      grid-template-columns: 1fr; /* 화면 크기가 더 작으면 1열 */
+    }
+}

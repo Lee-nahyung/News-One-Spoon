@@ -1,0 +1,80 @@
+/* 전체 헤더 스타일 */
+.header {
+  background-color: #00378b;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 로고 스타일 */
+.header-logo {
+  margin-bottom: 0; /* 제목과 네비게이션 바의 여백을 제거 */
+}
+
+.header-logo h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+/* 네비게이션 바 스타일 */
+.navbar {
+  background-color: white; /* 네비게이션 바의 배경색 */
+  width: 100%;
+  padding: 10px 0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 가벼운 그림자 추가 */
+}
+
+.navbar-menu {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li {
+  margin: 0 15px;
+}
+
+.navbar-menu li a {
+  color: #00378b; /* 링크의 색상 */
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.navbar-menu li a:hover {
+  text-decoration: underline;
+}
+
+/* 로그인 버튼 스타일 */
+.header-login .login-button {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.header-login .login-button:hover {
+  background-color: #e68900;
+}
+
+.logout-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+}
